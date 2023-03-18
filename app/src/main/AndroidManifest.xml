@@ -12,6 +12,10 @@
         android:theme="@style/Theme.WakacjeApp"
         tools:targetApi="31">
         <activity
+            android:name=".client_interface.MainClientMenu"
+            android:theme="@style/AppTheme.NoStatusBar"
+            android:exported="false" />
+        <activity
             android:name=".LoadingActivity"
             android:exported="false" />
         <activity

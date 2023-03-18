@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">WakacjeApp</string>
+
+<!-- =======MENU=GŁÓWNE=======-->
+
+   <string name="logo_name">Podróże marzeń</string>
+   <string name="search_text">Szukaj..</string>
+   <string name="menu_name">Jan Kowalski</string>
+
+
+
+<!-- ==========================-->
+
 </resources>
