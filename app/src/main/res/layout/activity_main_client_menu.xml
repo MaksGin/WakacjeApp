@@ -30,14 +30,14 @@
                 android:layout_height="match_parent"
                 android:text="@string/menu_name"
                 android:textSize="20dp"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:gravity="center_vertical"
                 android:layout_marginRight="10dp"/>
 
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/account_white_icon" />
+                android:src="@drawable/account" />
         </LinearLayout>
 
     </RelativeLayout>

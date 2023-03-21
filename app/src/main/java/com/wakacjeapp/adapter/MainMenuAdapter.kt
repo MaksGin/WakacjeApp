@@ -8,10 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wakacjeapp.R
 import com.wakacjeapp.databinding.EachItemBinding
 import com.wakacjeapp.databinding.RowTripAdBinding
-import com.wakacjeapp.model.Banner
-import com.wakacjeapp.model.DataItem
-import com.wakacjeapp.model.DataItemType
-import com.wakacjeapp.model.RecyclerItem
+import com.wakacjeapp.model.*
 
 // Klasa pozwalająca na stworzenie obiektu który później zostanie zastąpiony elementami w recycle view
 // recycle view na razie nie ma żadnych danych, uruchamiając konstruktor uzupełniamy jednocześnie zawartość recycle
@@ -19,6 +16,7 @@ import com.wakacjeapp.model.RecyclerItem
 
 class MainMenuAdapter(private val dataItemList : List<DataItem>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    //
     inner class BannerItemViewHolder(private val binding: RowTripAdBinding) : RecyclerView.ViewHolder(binding.root){
         fun bindBannerView(banner: Banner){
             binding.tripAdImg.setImageResource(banner.image)
@@ -33,12 +31,12 @@ class MainMenuAdapter(private val dataItemList : List<DataItem>) : RecyclerView.
             binding.childRecyclerView.layoutManager = LinearLayoutManager(binding.root.context, RecyclerView.HORIZONTAL, false)
         }
 
-        fun bindClothingRecyclerView(recyclerItemList: List<RecyclerItem>) {
+        fun bindHolidayRecyclerView(recyclerItemList: List<Trip>) {
             val adapter = MainMenuChildAdapter(DataItemType.HOLIDAY, recyclerItemList)
             binding.childRecyclerView.adapter = adapter
         }
 
-        fun bindBestSellerRecyclerView(recyclerItemList: List<RecyclerItem>) {
+        fun bindBestSellerRecyclerView(recyclerItemList: List<Trip>) {
 
             val snapHelper = PagerSnapHelper()
             snapHelper.attachToRecyclerView(binding.childRecyclerView)
@@ -95,7 +93,7 @@ override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
                 }
                 else -> {
                     dataItemList[position].recyclerItemList?.let {
-                        (holder as RecyclerItemViewHolder).bindClothingRecyclerView(
+                        (holder as RecyclerItemViewHolder).bindHolidayRecyclerView(
                             it
                         )
                     }

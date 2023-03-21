@@ -6,25 +6,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wakacjeapp.databinding.RowTripSaleBinding
 import com.wakacjeapp.databinding.RowTripSoloBinding
 import com.wakacjeapp.model.DataItemType
-import com.wakacjeapp.model.RecyclerItem
+import com.wakacjeapp.model.Trip
 
 
-class MainMenuChildAdapter(private val viewType: Int, private val recyclerItemList: List<RecyclerItem>) :
+class MainMenuChildAdapter(private val viewType: Int, private val recyclerItemList: List<Trip>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class BestSellerViewHolder(private val binding: RowTripSaleBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bindBestSellerView(recyclerItem: RecyclerItem) {
+        fun bindBestSellerView(recyclerItem: Trip) {
             binding.bestSellerImage.setImageResource(recyclerItem.image)
             binding.bestSellerText.text = recyclerItem.offer
         }
     }
 
-    inner class ClothingViewHolder(private val binding: RowTripSoloBinding) :
+    inner class HolidayViewHolder(private val binding: RowTripSoloBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bindClothingView(recyclerItem: RecyclerItem) {
+        fun bindHolidayView(recyclerItem: Trip) {
             binding.holidayImage.setImageResource(recyclerItem.image)
             binding.holidayText.text = recyclerItem.offer
         }
@@ -50,7 +50,7 @@ class MainMenuChildAdapter(private val viewType: Int, private val recyclerItemLi
                     parent,
                     false
                 )
-                return ClothingViewHolder(binding)
+                return HolidayViewHolder(binding)
             }
         }
     }
@@ -67,8 +67,8 @@ class MainMenuChildAdapter(private val viewType: Int, private val recyclerItemLi
                 holder.bindBestSellerView(recyclerItemList[position])
             }
 
-            is ClothingViewHolder -> {
-                holder.bindClothingView(recyclerItemList[position])
+            is HolidayViewHolder -> {
+                holder.bindHolidayView(recyclerItemList[position])
             }
         }
     }
