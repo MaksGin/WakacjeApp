@@ -1,21 +1,30 @@
 package com.wakacjeapp
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.wakacjeapp.client_interface.MainClientMenu
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import com.wakacjeapp.databinding.ActivityLoginBinding
 import com.wakacjeapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private var userEmail: String? = null
+    private var binding : ActivityMainBinding? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(binding?.root)
 
-        binding.btnMainmenuIntent.setOnClickListener{
-            startActivity(Intent(this,MainClientMenu::class.java));
-        }
+        userEmail = intent.getStringExtra(USER_EMAIL)
+
+        binding?.tvuserID?.setText(userEmail).toString()
+
+
+        // Write a message to the database
+        val database = Firebase.database
+        val myRef = database.getReference("message")
+
+        myRef.setValue("Hello, World!")
     }
 }
