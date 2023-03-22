@@ -30,7 +30,7 @@ class MainClientMenu : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        //testowy kom
+        //testowy kom ale z pushem do doskonalenia
 
         binding.mainMenuRecyclerView.setHasFixedSize(true)
         binding.mainMenuRecyclerView.layoutManager = LinearLayoutManager(this)
