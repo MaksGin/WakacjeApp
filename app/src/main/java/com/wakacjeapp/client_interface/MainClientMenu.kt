@@ -99,22 +99,22 @@ class MainClientMenu : AppCompatActivity() {
         bestSellerList.add(Trip(R.drawable.dominikana , "Up to 20% off"))
 //
 //
-//        //clothing
-//        val clothingList = ArrayList<RecyclerItem>()
-//        clothingList.add(RecyclerItem(R.drawable.dominikana, "Up to 25% off"))
-//        clothingList.add(RecyclerItem(R.drawable.dominikana, "Up to 25% off"))
-//        clothingList.add(RecyclerItem(R.drawable.dominikana, "Up to 25% off"))
-//        clothingList.add(RecyclerItem(R.drawable.dominikana, "Up to 25% off"))
-//        clothingList.add(RecyclerItem(R.drawable.dominikana, "Up to 25% off"))
-//        clothingList.add(RecyclerItem(R.drawable.dominikana, "Up to 25% off"))
-//        clothingList.add(RecyclerItem(R.drawable.dominikana, "Up to 25% off"))
+        //clothing
+        val clothingList = ArrayList<Trip>()
+        clothingList.add(Trip(R.drawable.dominikana, "Up to 25% off"))
+        clothingList.add(Trip(R.drawable.dominikana, "Up to 25% off"))
+        clothingList.add(Trip(R.drawable.dominikana, "Up to 25% off"))
+        clothingList.add(Trip(R.drawable.dominikana, "Up to 25% off"))
+        clothingList.add(Trip(R.drawable.dominikana, "Up to 25% off"))
+        clothingList.add(Trip(R.drawable.dominikana, "Up to 25% off"))
+        clothingList.add(Trip(R.drawable.dominikana, "Up to 25% off"))
 //
 //
         mList.add(DataItem(DataItemType.BEST_SELLER, bestSellerList))
-//        mList.add(DataItem(DataItemType.BANNER, Banner(R.drawable.ad_png)))
-//        mList.add(DataItem(DataItemType.HOLIDAY, clothingList))
-//        mList.add(DataItem(DataItemType.BANNER, Banner(R.drawable.ad_png)))
-//        mList.add(DataItem(DataItemType.BEST_SELLER, bestSellerList.asReversed()))
+        mList.add(DataItem(DataItemType.BANNER, Banner(R.drawable.ad_png)))
+        mList.add(DataItem(DataItemType.HOLIDAY, clothingList))
+        mList.add(DataItem(DataItemType.BANNER, Banner(R.drawable.ad_png)))
+        mList.add(DataItem(DataItemType.BEST_SELLER, bestSellerList.asReversed()))
         mList.add(DataItem(DataItemType.BANNER, Banner(R.drawable.ad_png)))
     }
 }
