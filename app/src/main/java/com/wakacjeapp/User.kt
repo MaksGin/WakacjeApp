@@ -1,4 +1,3 @@
 package com.wakacjeapp
 
-class User {
-}
+data class User(val email: String, val name: String)
