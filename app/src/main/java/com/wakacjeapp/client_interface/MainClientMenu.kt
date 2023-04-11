@@ -1,5 +1,6 @@
 package com.wakacjeapp.client_interface
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +13,10 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.wakacjeapp.LoginActivity
+import com.wakacjeapp.Messages.NewMessageActivity
 import com.wakacjeapp.R
+import com.wakacjeapp.USER_EMAIL
 import com.wakacjeapp.adapter.MainMenuAdapter
 import com.wakacjeapp.databinding.ActivityMainClientMenuBinding
 import com.wakacjeapp.model.*
@@ -39,12 +43,15 @@ class MainClientMenu : AppCompatActivity() {
         prepareData()
 
         main_binding.menuAllButton.setOnClickListener{
-            Toast.makeText(this@MainClientMenu, "Wszystkie aplikacje", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, NewMessageActivity::class.java)
+            startActivity(intent)
         }
 
         main_binding.ShowAccountButton.setOnClickListener{
             Toast.makeText(this@MainClientMenu, "Konto użytkownika", Toast.LENGTH_SHORT).show()
         }
+
+
 
     }
 

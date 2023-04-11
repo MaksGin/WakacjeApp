@@ -53,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
 
                     if (task.isSuccessful) {
-                        val intent = Intent(this, LatestMessagesActivity::class.java)
+                        val intent = Intent(this, MainClientMenu::class.java)
                         intent.putExtra(USER_EMAIL, email)
                         startActivity(intent)
                         //overridePendingTransition(R.anim.slide_enter_right,R.anim.slide_exit_right)
