@@ -1,5 +1,6 @@
 package com.wakacjeapp.adapter
 
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -7,7 +8,12 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.wakacjeapp.R
 import com.wakacjeapp.databinding.EachItemBinding
+import com.wakacjeapp.databinding.RowMenuActionBinding
+import com.wakacjeapp.databinding.RowTitleBinding
 import com.wakacjeapp.databinding.RowTripAdBinding
+import com.wakacjeapp.databinding.RowTripBinding
+import com.wakacjeapp.databinding.RowTripSearchBinding
+import com.wakacjeapp.databinding.RowTripSoloBinding
 import com.wakacjeapp.model.*
 
 // Klasa pozwalająca na stworzenie obiektu który później zostanie zastąpiony elementami w recycle view
@@ -16,10 +22,45 @@ import com.wakacjeapp.model.*
 
 class MainMenuAdapter(private val dataItemList : List<DataItem>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    //
+
+    inner class SoloHolidayItemViewHolder(private val binding: RowTripBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bindSoloHolidayView(holiday: Holidaysolo){
+            binding.tripImg.setImageResource(holiday.image)
+            binding.tripTitle.text = holiday.title
+            binding.tripDescription.text = holiday.description
+        }
+    }
+
+
     inner class BannerItemViewHolder(private val binding: RowTripAdBinding) : RecyclerView.ViewHolder(binding.root){
         fun bindBannerView(banner: Banner){
             binding.tripAdImg.setImageResource(banner.image)
+        }
+    }
+
+    inner class TextItemViewHolder(private val binding: RowTitleBinding) : RecyclerView.ViewHolder(binding.root){
+        fun bindTitleView(titleText: TitleText){
+            binding.mainTitle.text = titleText.description
+            binding.mainTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, titleText.size.toFloat())
+        }
+    }
+
+    inner class MenuItemViewHolder(private val binding: RowMenuActionBinding) : RecyclerView.ViewHolder(binding.root){
+        fun bindMenuView(menu: Menu){
+            binding.FirstButtonMenu.setBackgroundResource(menu.first_button_img)
+            binding.FirstTextMenu.text = menu.first_text
+            binding.SecondButtonMenu.setBackgroundResource(menu.second_button_img)
+            binding.SecondTextMenu.text = menu.second_text
+            binding.ThirdButtonMenu.setBackgroundResource(menu.third_button_img)
+            binding.ThirdTextMenu.text = menu.third_text
+            binding.FourthButtonMenu.setBackgroundResource(menu.fourth_button_img)
+            binding.FourthTextMenu.text = menu.fourth_text
+        }
+    }
+
+    inner class SearchItemViewHolder(private val binding: RowTripSearchBinding) : RecyclerView.ViewHolder(binding.root){
+        fun bindSearchView(search: Search){
+            binding.SearchText.text = search.search_text
         }
     }
 
@@ -39,6 +80,7 @@ class MainMenuAdapter(private val dataItemList : List<DataItem>) : RecyclerView.
         fun bindBestSellerRecyclerView(recyclerItemList: List<Trip>) {
 
             val snapHelper = PagerSnapHelper()
+            binding.childRecyclerView.onFlingListener = null
             snapHelper.attachToRecyclerView(binding.childRecyclerView)
             val adapter = MainMenuChildAdapter(DataItemType.BEST_SELLER, recyclerItemList)
             binding.childRecyclerView.adapter = adapter
@@ -46,11 +88,19 @@ class MainMenuAdapter(private val dataItemList : List<DataItem>) : RecyclerView.
     }
 
     override fun getItemViewType(position: Int): Int {
-        when(dataItemList[position].viewType){
+        return when(dataItemList[position].viewType){
             DataItemType.BANNER ->
-                return R.layout.row_trip_ad
+                R.layout.row_trip_ad
+            DataItemType.YOUR_HOLIDAY ->
+                R.layout.row_trip
+            DataItemType.TEXT ->
+                R.layout.row_title
+            DataItemType.SEARCH ->
+                R.layout.row_trip_search
+            DataItemType.MENU ->
+                R.layout.row_menu_action
             else ->
-                return R.layout.each_item
+                R.layout.each_item
 
         }
     }
@@ -60,6 +110,22 @@ class MainMenuAdapter(private val dataItemList : List<DataItem>) : RecyclerView.
             R.layout.row_trip_ad ->{
                 val binding = RowTripAdBinding.inflate(LayoutInflater.from(parent.context), parent,false)
                 return BannerItemViewHolder(binding)
+            }
+            R.layout.row_trip ->{
+                val binding = RowTripBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+                return SoloHolidayItemViewHolder(binding)
+            }
+            R.layout.row_title ->{
+                val binding =  RowTitleBinding.inflate(LayoutInflater.from(parent.context),parent, false)
+                return TextItemViewHolder(binding)
+            }
+            R.layout.row_trip_search ->{
+                val binding = RowTripSearchBinding.inflate(LayoutInflater.from(parent.context),parent, false)
+                return  SearchItemViewHolder(binding)
+            }
+            R.layout.row_menu_action ->{
+                val binding = RowMenuActionBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+                return MenuItemViewHolder(binding)
             }
             else ->{
                 val binding = EachItemBinding.inflate(LayoutInflater.from(parent.context), parent,false)
@@ -72,7 +138,6 @@ class MainMenuAdapter(private val dataItemList : List<DataItem>) : RecyclerView.
        return dataItemList.size
     }
 
-
     // Ostateczna funkcja pozwalająca na uruchomienie innych funkcji dostosowanych na podstawie
     // wyswietlania. Jesli dataitemlist ma byc pozioma np 0 to uruchom funkcje dla poziomego itemu
 
@@ -81,6 +146,18 @@ override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
     when (holder) {
         is BannerItemViewHolder -> {
             dataItemList[position].banner?.let { holder.bindBannerView(it) }
+        }
+        is SoloHolidayItemViewHolder -> {
+            dataItemList[position].holiday?.let { holder.bindSoloHolidayView(it) }
+        }
+        is TextItemViewHolder -> {
+            dataItemList[position].titleText?.let { holder.bindTitleView(it) }
+        }
+        is SearchItemViewHolder ->{
+            dataItemList[position].search?.let { holder.bindSearchView(it) }
+        }
+        is MenuItemViewHolder ->{
+            dataItemList[position].menu?.let { holder.bindMenuView(it) }
         }
         else -> {
             when (dataItemList[position].viewType) {
