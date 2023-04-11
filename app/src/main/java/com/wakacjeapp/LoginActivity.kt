@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.wakacjeapp.Messages.LatestMessagesActivity
 import com.wakacjeapp.client_interface.MainClientMenu
 import com.wakacjeapp.databinding.ActivityLoginBinding
 
@@ -52,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
 
                     if (task.isSuccessful) {
-                        val intent = Intent(this, MainClientMenu::class.java)
+                        val intent = Intent(this, LatestMessagesActivity::class.java)
                         intent.putExtra(USER_EMAIL, email)
                         startActivity(intent)
                         //overridePendingTransition(R.anim.slide_enter_right,R.anim.slide_exit_right)

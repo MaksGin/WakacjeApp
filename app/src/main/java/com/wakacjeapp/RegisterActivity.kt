@@ -3,11 +3,13 @@ package com.wakacjeapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.wakacjeapp.Messages.LatestMessagesActivity
 import com.wakacjeapp.databinding.ActivityRegisterBinding
 
 class RegisterActivity : AppCompatActivity() {
@@ -67,11 +69,12 @@ class RegisterActivity : AppCompatActivity() {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener {
 
-
-
                 email = binding?.emailEditText?.text.toString().trim()
-                saveToFirebase(User(email,name))
+                saveToFirebase(User(name, email, uid = firebaseAuth.uid))
                 Toast.makeText(this, "Sukces", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this,LatestMessagesActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
 
             }
             .addOnFailureListener {
@@ -81,12 +84,18 @@ class RegisterActivity : AppCompatActivity() {
     }
     private fun saveToFirebase(user:User) {
         // Get a reference to the Firebase Realtime Database
-        val database = FirebaseDatabase.getInstance()
-        val ref = database.getReference()
 
-        // Save the data to the "data" node in the database
-        val user = User(email,name)
-        ref.child("users").setValue(user)
+        val uid = FirebaseAuth.getInstance().uid
+        val database = FirebaseDatabase.getInstance()
+        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
+
+        val user = User(name, email,uid = firebaseAuth.uid)
+        ref.setValue(user).addOnSuccessListener{
+            Log.d("RegisterActivity","Zapisalismy usera do bazy danych! o id $uid")
+
+        }
+
+
 
     }
 }

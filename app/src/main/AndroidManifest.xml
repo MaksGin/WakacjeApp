@@ -12,9 +12,28 @@
         android:theme="@style/Theme.WakacjeApp"
         tools:targetApi="31">
         <activity
+            android:name=".Messages.ChatLogActivity"
+            android:exported="false" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Messages.LatestMessagesActivity" />
+        </activity>
+        <activity
+            android:name=".Messages.NewMessageActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Messages.LatestMessagesActivity" />
+        </activity>
+        <activity
+            android:name=".Messages.LatestMessagesActivity"
+            android:exported="true">
+
+        </activity>
+        <activity
             android:name=".client_interface.MainClientMenu"
-            android:theme="@style/AppTheme.NoStatusBar"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme.NoStatusBar" />
         <activity
             android:name=".LoadingActivity"
             android:exported="false" />

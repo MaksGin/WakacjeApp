@@ -5,18 +5,17 @@
     <string name="login">LOG IN</string>
     <string name="create_acc">CREATE ACCOUNT</string>
 
-<!-- =======MENU=GŁÓWNE=======-->
+    <!-- =======MENU=GŁÓWNE=======-->
 
-   <string name="logo_name">Podróże marzeń</string>
-   <string name="search_text">Szukaj..</string>
-   <string name="menu_name">Jan Kowalski</string>
+    <string name="logo_name">Podróże marzeń</string>
+    <string name="search_text">Szukaj..</string>
+    <string name="menu_name">Jan Kowalski</string>
 
     <string name="attractive_title">Dominikana</string>
     <string name="attractive_description">Wycieczka łodzią na wyspę Saona z lunchem w formie bufetu i najważniejszymi atrakcjami</string>
     <string name="attractive_item_title">Dominikana</string>
 
 
-
-<!-- ==========================-->
+    <!-- ==========================-->
 
 </resources>
