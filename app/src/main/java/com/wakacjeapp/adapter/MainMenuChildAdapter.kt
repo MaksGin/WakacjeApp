@@ -1,5 +1,6 @@
 package com.wakacjeapp.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -27,7 +28,13 @@ class MainMenuChildAdapter(private val viewType: Int, private val recyclerItemLi
         fun bindHolidayView(recyclerItem: Trip) {
             binding.holidayImage.setImageResource(recyclerItem.image)
             binding.holidayText.text = recyclerItem.offer
+
+            binding.root.setOnClickListener{
+                Log.e("Error", "Trip ${recyclerItem.offer}")
+            }
         }
+
+
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -62,11 +69,6 @@ class MainMenuChildAdapter(private val viewType: Int, private val recyclerItemLi
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         when (holder) {
-
-            is BestSellerViewHolder -> {
-                holder.bindBestSellerView(recyclerItemList[position])
-            }
-
             is HolidayViewHolder -> {
                 holder.bindHolidayView(recyclerItemList[position])
             }

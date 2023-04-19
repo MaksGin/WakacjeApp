@@ -6,7 +6,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".client_interface.MainClientMenu">
+    tools:context=".client_interface.MainClientMenu"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
