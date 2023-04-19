@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="trip_destination">Wydmy nad Bałtykiem, Polska</string>
-    <string name="rate">4.5</string>
+    <string name="trip_destination" translatable="false">Wydmy nad Bałtykiem, Polska</string>
+    <string name="rate" translatable="false">4.5</string>
+    <string name="dates">Dates:</string>
+    <string name="price">Price:</string>
+    <string name="details_title">Details:</string>
+    <string name="button_register">SIGN UP FOR THIS TRIP</string>
+    <string name="bg_picture" translatable="false">Background picture</string>
+    <string name="tv_time">Time:</string>
+    <string name="tv_activ">Sunbathing on the beach</string>
+    <string name="day_number">Day 2</string>
+    <string name="tv_time_value">8 AM</string>
 </resources>

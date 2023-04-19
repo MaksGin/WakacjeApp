@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WakacjeApp</string>
+    <string name="dates">Daty:</string>
+    <string name="price">Cena:</string>
+    <string name="details_title">Szczegóły:</string>
+    <string name="button_register">ZAPISZ SIĘ NA TĘ WYCIECZKĘ</string>
+    <string name="day_number">Dzień 2</string>
+    <string name="tv_time_value">8.00</string>
+    <string name="tv_time">Godzina:</string>
+    <string name="tv_activ">Opalanie na plaży</string>
+</resources>
