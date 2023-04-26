@@ -35,6 +35,12 @@ class LatestMessagesActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId){
+            R.id.GroupChat ->{
+                val intent = Intent(this,ChatGroupActivity::class.java)
+                var groupName = "Morskie Oko"
+                intent.putExtra("groupName", groupName)
+                startActivity(intent)
+            }
             R.id.newMsg ->{
                 val intent = Intent(this,NewMessageActivity::class.java)
                 startActivity(intent)

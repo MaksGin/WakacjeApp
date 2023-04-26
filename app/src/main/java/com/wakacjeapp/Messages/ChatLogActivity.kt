@@ -8,6 +8,7 @@ import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.wakacjeapp.databinding.ActivityChatGroupBinding
 import com.wakacjeapp.databinding.ActivityChatLogBinding
 
 class ChatLogActivity : AppCompatActivity() {
@@ -27,10 +28,6 @@ class ChatLogActivity : AppCompatActivity() {
         setContentView(binding?.root)
 
 
-
-
-
-
         val name = intent.getStringExtra("name")
         val receiverUid = intent.getStringExtra("receiverUid")
         val senderUid = FirebaseAuth.getInstance().currentUser?.uid
@@ -46,58 +43,66 @@ class ChatLogActivity : AppCompatActivity() {
         supportActionBar?.title = name
 
         messageList = ArrayList()
-        messageAdapter = ChatMessageAdapter(this,messageList)
+        messageAdapter = ChatMessageAdapter(this, messageList)
 
         binding?.rvChatLog?.layoutManager = LinearLayoutManager(this@ChatLogActivity)
         binding?.rvChatLog?.adapter = messageAdapter
         messageBox = binding?.enterMsg!!
 
-        binding?.btnSend?.setOnClickListener{
+        binding?.btnSend?.setOnClickListener {
 
             val message = messageBox.text.toString()
-            val messageObject = Message(message,senderUid)
 
-            myref.child("chats").child(senderRoom!!).child("messages").push() //update UI wysyłającego i odbiorcy
-                .setValue(messageObject).addOnSuccessListener {
-
-                    myref.child("chats").child(receiverRoom!!).child("messages").push()
-                        .setValue(messageObject)
-                    Log.i("receiverRoom",receiverRoom!!)
-                    Log.i("receiverRoom",senderRoom!!)
-                    Log.i("receiverUid",receiverUid!!)
-                    Log.i("senderid",senderUid!!)
-                }
-            messageBox.setText("")
-
-        }
-
-        //logika dodawania wiadomosci do recycleView
-        myref.child("chats").child(senderRoom!!).child("messages")
-            .addValueEventListener(object: ValueEventListener{
-                @SuppressLint("NotifyDataSetChanged")
+            val userRef = FirebaseDatabase.getInstance().reference.child("users").child(senderUid!!)
+            userRef.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
+                    val senderName = snapshot.child("name").getValue(String::class.java)
+                    val messageObject = Message(message, senderUid, senderName)
 
-                    messageList.clear()
+                    myref.child("chats").child(senderRoom!!).child("messages")
+                        .push() //update UI wysyłającego i odbiorcy
+                        .setValue(messageObject).addOnSuccessListener {
 
-                    for(postSnapshot in snapshot.children){
-                        val message = postSnapshot.getValue(Message::class.java)
-
-                        messageList.add(message!!)
-                    }
-                    messageAdapter.notifyDataSetChanged()
+                            myref.child("chats").child(receiverRoom!!).child("messages").push()
+                                .setValue(messageObject)
+                            Log.i("receiverRoom", receiverRoom!!)
+                            Log.i("receiverRoom", senderRoom!!)
+                            Log.i("receiverUid", receiverUid!!)
+                            Log.i("senderid", senderUid!!)
+                        }
+                    messageBox.setText("")
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-
+                    // obsługa błędów
                 }
-
             })
 
+            //logika dodawania wiadomosci do recycleView
+            myref.child("chats").child(senderRoom!!).child("messages")
+                .addValueEventListener(object : ValueEventListener {
+                    @SuppressLint("NotifyDataSetChanged")
+                    override fun onDataChange(snapshot: DataSnapshot) {
+
+                        messageList.clear()
+
+                        for (postSnapshot in snapshot.children) {
+                            val message = postSnapshot.getValue(Message::class.java)
+
+                            messageList.add(message!!)
+                        }
+                        messageAdapter.notifyDataSetChanged()
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+
+                    }
+
+                })
 
 
-
+        }
     }
 }
-
 
 

@@ -43,11 +43,11 @@ class ChatMessageAdapter(val context: Context,val messageList: ArrayList<Message
             //stuff for sent view holder
             val viewHolder = holder as SentViewHolder
             viewHolder.sentMessage.text = currentMsg.message
-
+            viewHolder.senderName.text = currentMsg.senderName
         }else{
             val viewHolder = holder as ReceiveViewHolder
             viewHolder.receiveMessage.text =  currentMsg.message
-
+            viewHolder.receiverName.text = currentMsg.senderName
 
         }
 
@@ -73,9 +73,11 @@ class ChatMessageAdapter(val context: Context,val messageList: ArrayList<Message
 
     class SentViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val sentMessage: TextView = itemView.findViewById<TextView>(R.id.tv_sent_msg)
+        val senderName: TextView = itemView.findViewById<TextView>(R.id.tv_sender_username)
     }
     class ReceiveViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val receiveMessage: TextView = itemView.findViewById<TextView>(R.id.tv_received_msg)
+        val receiverName: TextView = itemView.findViewById<TextView>(R.id.tv_received_username)
     }
 
 }
