@@ -3,14 +3,14 @@ package com.wakacjeapp.model
 //klasa potrzebna tworzenia obiektów wyświetlanych później jako jeden element Recycleview
 data class DataItem(val viewType: Int) {
 
-    var recyclerItemList: List<Trip>? = null
+    var recyclerItemList: List<com.wakacjeapp.trip.model.Trip>? = null
     var banner: Banner? = null
     var holiday: Holidaysolo? = null
     var titleText: TitleText? = null
     var menu: Menu? = null
     var search: Search? = null
 
-    constructor(viewType: Int, recyclerItemList: List<Trip>) : this(viewType) {
+    constructor(viewType: Int, recyclerItemList: List<com.wakacjeapp.trip.model.Trip>) : this(viewType) {
         this.recyclerItemList = recyclerItemList
     }
 

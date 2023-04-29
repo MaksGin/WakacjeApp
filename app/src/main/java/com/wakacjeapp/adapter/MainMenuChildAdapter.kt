@@ -4,33 +4,25 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.wakacjeapp.databinding.RowTripSaleBinding
 import com.wakacjeapp.databinding.RowTripSoloBinding
 import com.wakacjeapp.model.DataItemType
-import com.wakacjeapp.model.Trip
+import com.wakacjeapp.trip.model.Trip
 
 
 class MainMenuChildAdapter(private val viewType: Int, private val recyclerItemList: List<Trip>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    inner class BestSellerViewHolder(private val binding: RowTripSaleBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bindBestSellerView(recyclerItem: Trip) {
-            binding.bestSellerImage.setImageResource(recyclerItem.image)
-            binding.bestSellerText.text = recyclerItem.offer
-        }
-    }
-
     inner class HolidayViewHolder(private val binding: RowTripSoloBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bindHolidayView(recyclerItem: Trip) {
-            binding.holidayImage.setImageResource(recyclerItem.image)
-            binding.holidayText.text = recyclerItem.offer
+            //binding.holidayImage.setImageResource(recyclerItem.cena.toInt());
+            binding.holidayText.text = recyclerItem.kraj;
 
             binding.root.setOnClickListener{
-                Log.e("Error", "Trip ${recyclerItem.offer}")
+                Log.e("kraj", "Trip ${recyclerItem.kraj}")
+                Log.e("data", "data ${recyclerItem.data_pocz}")
+                Log.e("plan", " ${recyclerItem.plan[1]}")
             }
         }
 
@@ -43,13 +35,13 @@ class MainMenuChildAdapter(private val viewType: Int, private val recyclerItemLi
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         when (viewType) {
-            DataItemType.BEST_SELLER -> {
-                val binding = RowTripSaleBinding.inflate(
+            DataItemType.HOLIDAY -> {
+                val binding = RowTripSoloBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
                 )
-                return BestSellerViewHolder(binding)
+                return HolidayViewHolder(binding)
             }
             else -> {
                 val binding = RowTripSoloBinding.inflate(

@@ -110,19 +110,9 @@ class MainMenuAdapter(private val dataItemList : List<DataItem>, val context: Co
             binding.childRecyclerView.layoutManager = LinearLayoutManager(binding.root.context, RecyclerView.HORIZONTAL, false)
         }
 
-        fun bindHolidayRecyclerView(recyclerItemList: List<Trip>) {
+        fun bindHolidayRecyclerView(recyclerItemList: List<com.wakacjeapp.trip.model.Trip>) {
             val adapter = MainMenuChildAdapter(DataItemType.HOLIDAY, recyclerItemList)
             binding.childRecyclerView.adapter = adapter
-        }
-
-        fun bindBestSellerRecyclerView(recyclerItemList: List<Trip>) {
-
-            val snapHelper = PagerSnapHelper()
-            binding.childRecyclerView.onFlingListener = null
-            snapHelper.attachToRecyclerView(binding.childRecyclerView)
-            val adapter = MainMenuChildAdapter(DataItemType.BEST_SELLER, recyclerItemList)
-            binding.childRecyclerView.adapter = adapter
-
         }
     }
 
@@ -202,9 +192,9 @@ override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         else -> {
             when (dataItemList[position].viewType) {
-                DataItemType.BEST_SELLER -> {
+                DataItemType.HOLIDAY -> {
                     dataItemList[position].recyclerItemList?.let {
-                        (holder as RecyclerItemViewHolder).bindBestSellerRecyclerView(
+                        (holder as RecyclerItemViewHolder).bindHolidayRecyclerView(
                             it
                         )
                     }
