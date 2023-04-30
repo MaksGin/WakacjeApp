@@ -45,6 +45,18 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
+            android:name=".trip.TripDetailsActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoStatusBar">
+
+        </activity>
+        <activity
+            android:name=".trip.TripDetailsDayActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoStatusBar">
+
+        </activity>
+        <activity
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>

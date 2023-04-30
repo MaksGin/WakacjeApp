@@ -16,14 +16,14 @@ import com.wakacjeapp.databinding.UserRowMessageBinding
 class NewMessageAdapter(val context: Context, private var items: ArrayList<User>): RecyclerView.Adapter<NewMessageAdapter.ViewHolder>() {
 
 
-    interface OnItemClickListener {
-        fun onItemClick(user: User)
-    }
-    private var onItemClickListener: OnItemClickListener? = null
-
-    fun setOnItemClickListener(listener: OnItemClickListener) {
-        onItemClickListener = listener
-    }
+//    interface OnItemClickListener {
+//        fun onItemClick(user: User)
+//    }
+//    private var onItemClickListener: OnItemClickListener? = null
+//
+//    fun setOnItemClickListener(listener: OnItemClickListener) {
+//        onItemClickListener = listener
+//    }
 
     class ViewHolder(binding: UserRowMessageBinding): RecyclerView.ViewHolder(binding.root){
         val tv1 = binding.userName
@@ -53,6 +53,7 @@ class NewMessageAdapter(val context: Context, private var items: ArrayList<User>
             context.startActivity(intent)
 
         }
+        Log.e("Error", "Pozycja bindsolo ${user}")
 
 
 

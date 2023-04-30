@@ -1,12 +1,18 @@
 package com.wakacjeapp.adapter
 
+import android.content.Intent
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.wakacjeapp.Messages.ChatLogActivity
+import com.wakacjeapp.Messages.NewMessageActivity
 import com.wakacjeapp.R
+import com.wakacjeapp.client_interface.MainClientMenu
 import com.wakacjeapp.databinding.EachItemBinding
 import com.wakacjeapp.databinding.RowMenuActionBinding
 import com.wakacjeapp.databinding.RowTitleBinding
@@ -15,13 +21,13 @@ import com.wakacjeapp.databinding.RowTripBinding
 import com.wakacjeapp.databinding.RowTripSearchBinding
 import com.wakacjeapp.databinding.RowTripSoloBinding
 import com.wakacjeapp.model.*
+import android.content.Context
 
 // Klasa pozwalająca na stworzenie obiektu który później zostanie zastąpiony elementami w recycle view
 // recycle view na razie nie ma żadnych danych, uruchamiając konstruktor uzupełniamy jednocześnie zawartość recycle
 // adaptery należy później przypisać
 
-class MainMenuAdapter(private val dataItemList : List<DataItem>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
+class MainMenuAdapter(private val dataItemList : List<DataItem>, val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class SoloHolidayItemViewHolder(private val binding: RowTripBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bindSoloHolidayView(holiday: Holidaysolo){
@@ -30,7 +36,6 @@ class MainMenuAdapter(private val dataItemList : List<DataItem>) : RecyclerView.
             binding.tripDescription.text = holiday.description
         }
     }
-
 
     inner class BannerItemViewHolder(private val binding: RowTripAdBinding) : RecyclerView.ViewHolder(binding.root){
         fun bindBannerView(banner: Banner){
@@ -42,10 +47,22 @@ class MainMenuAdapter(private val dataItemList : List<DataItem>) : RecyclerView.
         fun bindTitleView(titleText: TitleText){
             binding.mainTitle.text = titleText.description
             binding.mainTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, titleText.size.toFloat())
+
+            binding.showMoreBtn.setOnClickListener{
+                val intent = Intent(context,ChatLogActivity::class.java)
+                context.startActivity(intent)
+            }
+
         }
     }
 
     inner class MenuItemViewHolder(private val binding: RowMenuActionBinding) : RecyclerView.ViewHolder(binding.root){
+
+        private val btn1 = binding.FirstButtonMenu
+        private val btn2 = binding.SecondButtonMenu
+        private val btn3 = binding.ThirdButtonMenu
+        private val btn4 = binding.FourthButtonMenu
+
         fun bindMenuView(menu: Menu){
             binding.FirstButtonMenu.setBackgroundResource(menu.first_button_img)
             binding.FirstTextMenu.text = menu.first_text
@@ -55,6 +72,27 @@ class MainMenuAdapter(private val dataItemList : List<DataItem>) : RecyclerView.
             binding.ThirdTextMenu.text = menu.third_text
             binding.FourthButtonMenu.setBackgroundResource(menu.fourth_button_img)
             binding.FourthTextMenu.text = menu.fourth_text
+
+            btn1.setOnClickListener {
+                val intent = Intent(context,NewMessageActivity::class.java)
+                context.startActivity(intent)
+            }
+
+            btn2.setOnClickListener {
+                val intent = Intent(context,NewMessageActivity::class.java)
+                context.startActivity(intent)
+            }
+
+            btn3.setOnClickListener {
+                val intent = Intent(context,ChatLogActivity::class.java)
+                context.startActivity(intent)
+            }
+
+            btn4.setOnClickListener {
+                val intent = Intent(context,ChatLogActivity::class.java)
+                context.startActivity(intent)
+            }
+
         }
     }
 
@@ -67,22 +105,13 @@ class MainMenuAdapter(private val dataItemList : List<DataItem>) : RecyclerView.
     inner class RecyclerItemViewHolder(private val binding: EachItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            //odwołujemy się do layoutu z each_item.xnk do nowego recycle view
+            //odwołujemy się do layoutu z each_item.xml do nowego recycle view
             binding.childRecyclerView.setHasFixedSize(true)
             binding.childRecyclerView.layoutManager = LinearLayoutManager(binding.root.context, RecyclerView.HORIZONTAL, false)
         }
 
-        fun bindHolidayRecyclerView(recyclerItemList: List<Trip>) {
+        fun bindHolidayRecyclerView(recyclerItemList: List<com.wakacjeapp.trip.model.Trip>) {
             val adapter = MainMenuChildAdapter(DataItemType.HOLIDAY, recyclerItemList)
-            binding.childRecyclerView.adapter = adapter
-        }
-
-        fun bindBestSellerRecyclerView(recyclerItemList: List<Trip>) {
-
-            val snapHelper = PagerSnapHelper()
-            binding.childRecyclerView.onFlingListener = null
-            snapHelper.attachToRecyclerView(binding.childRecyclerView)
-            val adapter = MainMenuChildAdapter(DataItemType.BEST_SELLER, recyclerItemList)
             binding.childRecyclerView.adapter = adapter
         }
     }
@@ -143,6 +172,7 @@ class MainMenuAdapter(private val dataItemList : List<DataItem>) : RecyclerView.
 
 override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
+
     when (holder) {
         is BannerItemViewHolder -> {
             dataItemList[position].banner?.let { holder.bindBannerView(it) }
@@ -158,12 +188,13 @@ override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         }
         is MenuItemViewHolder ->{
             dataItemList[position].menu?.let { holder.bindMenuView(it) }
-        }
+            }
+
         else -> {
             when (dataItemList[position].viewType) {
-                DataItemType.BEST_SELLER -> {
+                DataItemType.HOLIDAY -> {
                     dataItemList[position].recyclerItemList?.let {
-                        (holder as RecyclerItemViewHolder).bindBestSellerRecyclerView(
+                        (holder as RecyclerItemViewHolder).bindHolidayRecyclerView(
                             it
                         )
                     }
