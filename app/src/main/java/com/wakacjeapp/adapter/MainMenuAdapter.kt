@@ -112,7 +112,7 @@ class MainMenuAdapter(private val dataItemList : List<DataItem>, val context: Co
         }
 
         fun bindHolidayRecyclerView(recyclerItemList: List<com.wakacjeapp.trip.model.Trip>) {
-            val adapter = MainMenuChildAdapter(DataItemType.HOLIDAY, recyclerItemList)
+            val adapter = MainMenuChildAdapter(DataItemType.HOLIDAY, recyclerItemList, context)
             binding.childRecyclerView.adapter = adapter
         }
     }

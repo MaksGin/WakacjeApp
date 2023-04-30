@@ -3,19 +3,21 @@ package com.wakacjeapp.trip.model
 import com.wakacjeapp.User
 
 class Trip {
-    var cena: Double
-    var data_pocz: String
-    var data_powrotu: String
-    var miejsce: String
-    var kraj: String
-    var ocena: Double
-    var opis: String
-    var zdjecie: String
-    var ilosc_miejsc: Int
-    val plan: ArrayList<TripDay>
-    var uzytkownicy: ArrayList<User>
-    private lateinit var id_wycieczki: String
+    var cena: Double = 0.0
+    var data_pocz: String = ""
+    var data_powrotu: String =""
+    var miejsce: String = ""
+    var kraj: String = ""
+    var ocena: Double = 0.0
+    var opis: String = ""
+    var zdjecie: String = ""
+    var ilosc_miejsc: Int = 0
+    var plan: ArrayList<TripDay> = ArrayList()
+    var uzytkownicy: ArrayList<User> = ArrayList()
+    var id_wycieczki: String = ""
 
+
+    constructor()
     constructor(
         data_pocz: String,
         cena: Double,

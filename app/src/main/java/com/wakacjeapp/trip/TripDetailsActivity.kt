@@ -4,11 +4,13 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wakacjeapp.R
 import com.wakacjeapp.databinding.ActivityTripDetailsBinding
 import com.wakacjeapp.trip.adapter.TripDetailsAdapter
+import com.wakacjeapp.trip.model.Trip
 import com.wakacjeapp.trip.model.TripDay
 
 class TripDetailsActivity : AppCompatActivity() {

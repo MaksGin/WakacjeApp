@@ -1,15 +1,20 @@
 package com.wakacjeapp.adapter
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.wakacjeapp.Messages.LatestMessagesActivity
 import com.wakacjeapp.databinding.RowTripSoloBinding
 import com.wakacjeapp.model.DataItemType
 import com.wakacjeapp.trip.model.Trip
+import android.content.Context
+import android.os.Bundle
+import com.wakacjeapp.trip.TripDetailsActivity
 
 
-class MainMenuChildAdapter(private val viewType: Int, private val recyclerItemList: List<Trip>) :
+class MainMenuChildAdapter(private val viewType: Int, private val recyclerItemList: List<Trip>, val context: Context) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class HolidayViewHolder(private val binding: RowTripSoloBinding) :
@@ -20,9 +25,8 @@ class MainMenuChildAdapter(private val viewType: Int, private val recyclerItemLi
             binding.holidayText.text = recyclerItem.kraj;
 
             binding.root.setOnClickListener{
-                Log.e("kraj", "Trip ${recyclerItem.kraj}")
-                Log.e("data", "data ${recyclerItem.data_pocz}")
-                Log.e("plan", " ${recyclerItem.plan[1]}")
+                val intent = Intent(context,TripDetailsActivity::class.java)
+                context.startActivity(intent)
             }
         }
 
