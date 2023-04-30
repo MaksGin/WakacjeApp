@@ -22,6 +22,7 @@ import com.wakacjeapp.databinding.RowTripSearchBinding
 import com.wakacjeapp.databinding.RowTripSoloBinding
 import com.wakacjeapp.model.*
 import android.content.Context
+import com.wakacjeapp.Messages.LatestMessagesActivity
 
 // Klasa pozwalająca na stworzenie obiektu który później zostanie zastąpiony elementami w recycle view
 // recycle view na razie nie ma żadnych danych, uruchamiając konstruktor uzupełniamy jednocześnie zawartość recycle
@@ -74,7 +75,7 @@ class MainMenuAdapter(private val dataItemList : List<DataItem>, val context: Co
             binding.FourthTextMenu.text = menu.fourth_text
 
             btn1.setOnClickListener {
-                val intent = Intent(context,NewMessageActivity::class.java)
+                val intent = Intent(context,LatestMessagesActivity::class.java)
                 context.startActivity(intent)
             }
 
