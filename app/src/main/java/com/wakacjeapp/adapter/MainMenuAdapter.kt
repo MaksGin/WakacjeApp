@@ -114,6 +114,11 @@ class MainMenuAdapter(private val dataItemList : List<DataItem>, val context: Co
     inner class SearchItemViewHolder(private val binding: RowTripSearchBinding) : RecyclerView.ViewHolder(binding.root){
         fun bindSearchView(search: Search){
             binding.SearchText.text = search.search_text
+
+            binding.root.setOnClickListener {
+                val intent = Intent(context, AllTrips::class.java)
+                context.startActivity(intent)
+            }
         }
     }
 
