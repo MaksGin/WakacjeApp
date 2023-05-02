@@ -15,6 +15,9 @@
     <string name="attractive_description">Wycieczka łodzią na wyspę Saona z lunchem w formie bufetu i najważniejszymi atrakcjami</string>
     <string name="attractive_item_title">Dominikana</string>
     <string name="testowa_opcja">test</string>
+    <string name="title_activity_client_trips_view">ClientTripsView</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
     <!-- ==========================-->
 

@@ -16,6 +16,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.wakacjeapp.LoginActivity
 import com.wakacjeapp.Messages.NewMessageActivity
 import com.wakacjeapp.R
 import com.wakacjeapp.User
@@ -24,7 +25,6 @@ import com.wakacjeapp.databinding.ActivityMainClientMenuBinding
 import com.wakacjeapp.model.*
 import com.wakacjeapp.trip.model.Trip
 import com.wakacjeapp.trip.model.TripDay
-import java.util.Collections
 
 
 class MainClientMenu : AppCompatActivity() {
@@ -39,48 +39,53 @@ class MainClientMenu : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         main_binding = ActivityMainClientMenuBinding.inflate(layoutInflater)
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar()?.hide();
         setContentView(main_binding.root)
 
         main_binding.mainMenuRecyclerView.setHasFixedSize(true)
         main_binding.mainMenuRecyclerView.layoutManager = LinearLayoutManager(this)
-        val user_mail = intent.getStringExtra("USER_EMAIL")
 
         mList = ArrayList()
         getTripsList()
         adapter = MainMenuAdapter(mList, this)
 
+        var imiee =""
+        znajdzUzytkownika(FirebaseAuth.getInstance().uid, object : UserListener {
+            override fun onUserFound(imie: String) {
+                main_binding.daneUz.text = imie
+                imiee = imie
+            }
+        })
 
 
         main_binding.menuAllButton.setOnClickListener {
-            val intent = Intent(this, NewMessageActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
+            Toast.makeText(this@MainClientMenu, "Pomyślnie wylogowano", Toast.LENGTH_SHORT).show()
+            startActivity(intent)
 
-            dodajUzytkownikaDoWycieczki("-NUIEDxYb9_zMgVTn7uY", User( name = "Maksymilian", email = "maksymilian@wp.pl", uid = "r7OxkN0jERgqw4OBQ5qQwvytjuf2"))
-            //startActivity(intent)
         }
 
         main_binding.ShowAccountButton.setOnClickListener {
-            //dodajNoweWycieczki()
-            Toast.makeText(this@MainClientMenu, "Konto użytkownika", Toast.LENGTH_SHORT).show()
+//            dodajNoweWycieczki()
+            Toast.makeText(this@MainClientMenu, "Cześć $imiee", Toast.LENGTH_SHORT).show()
         }
 
     }
 
+
+
+
     fun dodajUzytkownikaDoWycieczki(wycieczkaId: String, nowyUzytkownik: User) {
         val database = FirebaseDatabase.getInstance()
         val wycieczkiRef = database.getReference("wycieczki")
-
         val wycieczkaRef = wycieczkiRef.child(wycieczkaId)
 
         wycieczkaRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                 val wycieczka = dataSnapshot.getValue(Trip::class.java) // Pobiera aktualne wartości wycieczki
-                if (wycieczka != null) {
-                    Toast.makeText(this@MainClientMenu, wycieczka.kraj, Toast.LENGTH_SHORT).show()
-                }
                 wycieczka?.uzytkownicy?.add(nowyUzytkownik) // Dodaje uzytkownika
                 wycieczkaRef.setValue(wycieczka) // Aktualizuje wartości
             }
@@ -99,8 +104,6 @@ class MainClientMenu : AppCompatActivity() {
         }
         return false
     }
-
-
     private fun uzupelnij_liste(losowe_itemy: ArrayList<DataItem>): ArrayList<DataItem> {
         losowe_itemy.add(DataItem(DataItemType.BANNER, Banner(R.drawable.ad_png)))
         losowe_itemy.add(DataItem(DataItemType.BANNER, Banner(R.drawable.ad_img2)))
@@ -112,16 +115,14 @@ class MainClientMenu : AppCompatActivity() {
 
     private fun getTripsList() {
         val tripsRef = FirebaseDatabase.getInstance().reference.child("wycieczki") //odszukanie wycieczek
-        val twoje_wycieczki: ArrayList<Trip>
-        val wszystkie_wycieczki: ArrayList<Trip>
 
         // ---------- M E N U -------
         mList.add(DataItem(DataItemType.SEARCH, Search("Szukaj")))
         mList.add(DataItem(DataItemType.MENU, Menu(
             R.drawable.chat_bubble_img,"Chat",
             R.drawable.baseline_map_24,"Wycieczki",
-            R.drawable.chat_bubble_img,"Chat",
-            R.drawable.chat_bubble_img,"Chat")))
+            R.drawable.offer_icon,"Oferty",
+            R.drawable.baseline_info_24,"Info")))
         // -------------------------
 
         // --- Nagłówek ---
@@ -136,6 +137,7 @@ class MainClientMenu : AppCompatActivity() {
                     val wycieczka = ds.getValue(Trip::class.java)
                     if (wycieczka != null) {
                         wszystkie_wycieczki.add(wycieczka)
+//                        Log.e("zdjecie", wycieczka.zdjecie.toString())
                     }
                 }
                 wszystkie_wycieczki.shuffle()
@@ -150,30 +152,29 @@ class MainClientMenu : AppCompatActivity() {
                     }
 
                 if(czy_jest_chociaz_jedna == 0){
-                    mList.add(DataItem(DataItemType.TEXT, TitleText("Moje wycieczki",20)))
-
+                    mList.add(DataItem(DataItemType.TEXT, TitleText("Oferty",20,"oferty")))
                     wszystkie_wycieczki.forEach { wycieczka ->
-                        losowe_itemy.add(DataItem(DataItemType.YOUR_HOLIDAY, Holidaysolo(R.drawable.dominikana,wycieczka.kraj,wycieczka.opis)))
+                        losowe_itemy.add(DataItem(DataItemType.YOUR_HOLIDAY, wycieczka))
                     }
 
                     uzupelnij_liste(losowe_itemy as ArrayList<DataItem>)
                 }else if(czy_jest_chociaz_jedna == 1){
-                    mList.add(DataItem(DataItemType.TEXT, TitleText("Moje wycieczki",20)))
-                    mList.add(DataItem(DataItemType.YOUR_HOLIDAY, Holidaysolo(R.drawable.dominikana,twoje_wycieczki[0].kraj,twoje_wycieczki[0].opis)))
-                    mList.add(DataItem(DataItemType.TEXT, TitleText("Oferty",20)))
+                    mList.add(DataItem(DataItemType.TEXT, TitleText("Moje wycieczki",20,"moje_wycieczki")))
+                    mList.add(DataItem(DataItemType.YOUR_HOLIDAY, twoje_wycieczki[0]))
+                    mList.add(DataItem(DataItemType.TEXT, TitleText("Oferty",20,"oferty")))
 
                     wszystkie_wycieczki.forEach { wycieczka ->
-                        losowe_itemy.add(DataItem(DataItemType.YOUR_HOLIDAY, Holidaysolo(R.drawable.dominikana,wycieczka.kraj,wycieczka.opis)))
+                        losowe_itemy.add(DataItem(DataItemType.YOUR_HOLIDAY, wycieczka))
                     }
 
                     uzupelnij_liste(losowe_itemy as ArrayList<DataItem>)
                 }else{
-                    mList.add(DataItem(DataItemType.TEXT, TitleText("Moje wycieczki",20)))
+                    mList.add(DataItem(DataItemType.TEXT, TitleText("Moje wycieczki",20,"moje_wycieczki")))
                     mList.add(DataItem(DataItemType.HOLIDAY, twoje_wycieczki))
-                    mList.add(DataItem(DataItemType.TEXT, TitleText("Oferty",20)))
+                    mList.add(DataItem(DataItemType.TEXT, TitleText("Oferty",20,"oferty")))
 
                     wszystkie_wycieczki.forEach { wycieczka ->
-                        losowe_itemy.add(DataItem(DataItemType.YOUR_HOLIDAY, Holidaysolo(R.drawable.dominikana,wycieczka.kraj,wycieczka.opis)))
+                        losowe_itemy.add(DataItem(DataItemType.YOUR_HOLIDAY, wycieczka))
                     }
                     uzupelnij_liste(losowe_itemy as ArrayList<DataItem>)
                 }
@@ -224,6 +225,8 @@ class MainClientMenu : AppCompatActivity() {
 
         val uzytkownicy: ArrayList<User> = ArrayList()
         uzytkownicy.add( User(name = "Marcin", email = "marcin@wp.pl", uid = "f8OGF4FoJkMkOY69ykZ4l4K0geK2"))
+
+
 
         val trip = Trip(
             cena = 1000.0,
@@ -293,7 +296,7 @@ class MainClientMenu : AppCompatActivity() {
             kraj = "Sudan",
             ocena = 4.2,
             opis = "Safari w Parku Narodowym Dżabal Kurdufan",
-            zdjecie = "Sudan.png",
+            zdjecie = "sudan.png",
             ilosc_miejsc = 10,
             plan = daysList3,
             uzytkownicy = uzytkownicy
@@ -312,9 +315,9 @@ class MainClientMenu : AppCompatActivity() {
             kraj = "Izrael",
             ocena = 4.7,
             opis = "Zwiedzanie Izraela",
-            zdjecie = "Izrael.png",
+            zdjecie = "izrael.png",
             ilosc_miejsc = 8,
-            plan = daysList1,
+            plan = daysList4,
             uzytkownicy = uzytkownicy
         )
 
@@ -332,9 +335,9 @@ class MainClientMenu : AppCompatActivity() {
             kraj = "Indie",
             ocena = 4.5,
             opis = "Kulturowe zwiedzanie Indii",
-            zdjecie = "Indie.png",
+            zdjecie = "indie.png",
             ilosc_miejsc = 12,
-            plan = daysList2,
+            plan = daysList5,
             uzytkownicy = uzytkownicy
         )
 
@@ -355,7 +358,7 @@ class MainClientMenu : AppCompatActivity() {
             opis = "Safari w Parku Narodowym Murchison Falls",
             zdjecie = "Uganda.png",
             ilosc_miejsc = 8,
-            plan = daysList4,
+            plan = daysList6,
             uzytkownicy = uzytkownicy
         )
 
@@ -376,7 +379,7 @@ class MainClientMenu : AppCompatActivity() {
             opis = "Zwiedzanie Tokio i Kioto",
             zdjecie = "Japonia.png",
             ilosc_miejsc = 6,
-            plan = daysList5,
+            plan = daysList7,
             uzytkownicy = uzytkownicy
         )
 
@@ -440,7 +443,7 @@ class MainClientMenu : AppCompatActivity() {
             opis = "Safari na lodowcu Vatnajökull",
             zdjecie = "Islandia.png",
             ilosc_miejsc = 15,
-            plan = daysList8,
+            plan = daysList10,
             uzytkownicy = uzytkownicy
         )
 
@@ -460,7 +463,7 @@ class MainClientMenu : AppCompatActivity() {
             opis = "Zwiedzanie zamków i pałaców Edynburga",
             zdjecie = "Szkocja.png",
             ilosc_miejsc = 20,
-            plan = daysList9,
+            plan = daysList11,
             uzytkownicy = uzytkownicy
         )
 
@@ -483,10 +486,11 @@ class MainClientMenu : AppCompatActivity() {
             opis = "Wycieczka do Norwegii",
             zdjecie = "Norwegia.png",
             ilosc_miejsc = 8,
-            plan = daysList11,
+            plan = daysList12,
             uzytkownicy = uzytkownicy
         )
 
+        dodajNowaWycieczka(trip);
         dodajNowaWycieczka(trip1);
         dodajNowaWycieczka(trip2);
         dodajNowaWycieczka(trip3);

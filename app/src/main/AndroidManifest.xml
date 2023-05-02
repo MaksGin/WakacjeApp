@@ -12,6 +12,18 @@
         android:theme="@style/Theme.WakacjeApp"
         tools:targetApi="31">
         <activity
+            android:name=".client_interface.InfoActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoStatusBar" />
+        <activity
+            android:name=".client_interface.AllTrips"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoStatusBar" />
+        <activity
+            android:name=".client_interface.ClientTrips"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoStatusBar" />
+        <activity
             android:name=".Messages.ChatGroupActivity"
             android:exported="false" />
         <activity
@@ -47,15 +59,11 @@
         <activity
             android:name=".trip.TripDetailsActivity"
             android:exported="false"
-            android:theme="@style/AppTheme.NoStatusBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoStatusBar" />
         <activity
             android:name=".trip.TripDetailsDayActivity"
             android:exported="false"
-            android:theme="@style/AppTheme.NoStatusBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoStatusBar" />
         <activity
             android:name=".LoginActivity"
             android:exported="true">

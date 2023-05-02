@@ -23,6 +23,11 @@ import com.wakacjeapp.databinding.RowTripSoloBinding
 import com.wakacjeapp.model.*
 import android.content.Context
 import com.wakacjeapp.Messages.LatestMessagesActivity
+import com.wakacjeapp.client_interface.AllTrips
+import com.wakacjeapp.client_interface.ClientTrips
+import com.wakacjeapp.client_interface.InfoActivity
+import com.wakacjeapp.trip.TripDetailsActivity
+import com.wakacjeapp.trip.model.Trip
 
 // Klasa pozwalająca na stworzenie obiektu który później zostanie zastąpiony elementami w recycle view
 // recycle view na razie nie ma żadnych danych, uruchamiając konstruktor uzupełniamy jednocześnie zawartość recycle
@@ -31,10 +36,18 @@ import com.wakacjeapp.Messages.LatestMessagesActivity
 class MainMenuAdapter(private val dataItemList : List<DataItem>, val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class SoloHolidayItemViewHolder(private val binding: RowTripBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bindSoloHolidayView(holiday: Holidaysolo){
-            binding.tripImg.setImageResource(holiday.image)
-            binding.tripTitle.text = holiday.title
-            binding.tripDescription.text = holiday.description
+        fun bindSoloHolidayView(holiday: Trip){
+            val imageMap = ImageMap().imageMap
+            binding.tripImg.setImageResource(imageMap[holiday.zdjecie] ?: R.drawable.dominikana);
+            binding.tripTitle.text = holiday.kraj
+            binding.tripDescription.text = holiday.opis
+
+            binding.root.setOnClickListener{
+                val intent = Intent(context, TripDetailsActivity::class.java)
+                intent.putExtra("trip", holiday)
+                context.startActivity(intent)
+            }
+
         }
     }
 
@@ -49,11 +62,12 @@ class MainMenuAdapter(private val dataItemList : List<DataItem>, val context: Co
             binding.mainTitle.text = titleText.description
             binding.mainTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, titleText.size.toFloat())
 
+
+            val intenMap = IntentMap().intentMap
             binding.showMoreBtn.setOnClickListener{
-                val intent = Intent(context,ChatLogActivity::class.java)
+                val intent = Intent(context,intenMap[titleText.intent] ?: AllTrips::class.java)
                 context.startActivity(intent)
             }
-
         }
     }
 
@@ -80,17 +94,17 @@ class MainMenuAdapter(private val dataItemList : List<DataItem>, val context: Co
             }
 
             btn2.setOnClickListener {
-                val intent = Intent(context,NewMessageActivity::class.java)
+                val intent = Intent(context,ClientTrips::class.java)
                 context.startActivity(intent)
             }
 
             btn3.setOnClickListener {
-                val intent = Intent(context,ChatLogActivity::class.java)
+                val intent = Intent(context,AllTrips::class.java)
                 context.startActivity(intent)
             }
 
             btn4.setOnClickListener {
-                val intent = Intent(context,ChatLogActivity::class.java)
+                val intent = Intent(context,InfoActivity::class.java)
                 context.startActivity(intent)
             }
 

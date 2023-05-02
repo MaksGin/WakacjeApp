@@ -1,13 +1,15 @@
 package com.wakacjeapp.trip.model
 
-class TripDay {
-    var numer = 0
-    var opis: String = ""
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-    constructor()
-    constructor(numer: Int, opis: String)
-    {
-        this.numer = numer
-        this.opis = opis
-    }
+@Parcelize
+class TripDay(
+    var numer: Int,
+    var opis: String) : Parcelable
+{
+    constructor() : this(
+        0,
+        ""
+    )
 }

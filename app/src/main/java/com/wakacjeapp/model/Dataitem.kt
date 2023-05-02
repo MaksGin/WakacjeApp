@@ -1,16 +1,18 @@
 package com.wakacjeapp.model
 
+import com.wakacjeapp.trip.model.Trip
+
 //klasa potrzebna tworzenia obiektów wyświetlanych później jako jeden element Recycleview
 data class DataItem(val viewType: Int) {
 
-    var recyclerItemList: List<com.wakacjeapp.trip.model.Trip>? = null
+    var recyclerItemList: List<Trip>? = null
     var banner: Banner? = null
-    var holiday: Holidaysolo? = null
+    var holiday: Trip? = null
     var titleText: TitleText? = null
     var menu: Menu? = null
     var search: Search? = null
 
-    constructor(viewType: Int, recyclerItemList: List<com.wakacjeapp.trip.model.Trip>) : this(viewType) {
+    constructor(viewType: Int, recyclerItemList: List<Trip>) : this(viewType) {
         this.recyclerItemList = recyclerItemList
     }
 
@@ -18,7 +20,7 @@ data class DataItem(val viewType: Int) {
         this.banner = banner
     }
 
-    constructor(viewType: Int, holiday: Holidaysolo) : this(viewType){
+    constructor(viewType: Int, holiday: Trip) : this(viewType){
         this.holiday = holiday
     }
 
@@ -38,11 +40,11 @@ data class DataItem(val viewType: Int) {
 
 //klasy potrzebne do stworzenia obiektów typu DataItem
 
-data class Trip(val image: Int, val offer: String?)
+//data class Trip(val image: Int, val offer: String?)
 data class Banner(val image: Int)
 data class Holidaysolo(val image: Int, val title: String?, val description: String?)
 
-data class TitleText(val description: String?, val size: Int)
+data class TitleText(val description: String?, val size: Int, val intent: String)
 
 data class Menu(val first_button_img: Int, val first_text: String,
                 val second_button_img: Int, val second_text: String,

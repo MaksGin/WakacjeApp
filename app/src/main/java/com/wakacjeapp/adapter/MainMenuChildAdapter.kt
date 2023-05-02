@@ -11,6 +11,8 @@ import com.wakacjeapp.model.DataItemType
 import com.wakacjeapp.trip.model.Trip
 import android.content.Context
 import android.os.Bundle
+import com.wakacjeapp.R
+import com.wakacjeapp.model.ImageMap
 import com.wakacjeapp.trip.TripDetailsActivity
 
 
@@ -21,11 +23,13 @@ class MainMenuChildAdapter(private val viewType: Int, private val recyclerItemLi
         RecyclerView.ViewHolder(binding.root) {
 
         fun bindHolidayView(recyclerItem: Trip) {
-            //binding.holidayImage.setImageResource(recyclerItem.cena.toInt());
+            val imageMap = ImageMap().imageMap
+            binding.holidayImage.setImageResource(imageMap[recyclerItem.zdjecie] ?: R.drawable.dominikana);
             binding.holidayText.text = recyclerItem.kraj;
 
             binding.root.setOnClickListener{
                 val intent = Intent(context,TripDetailsActivity::class.java)
+                intent.putExtra("trip", recyclerItem)
                 context.startActivity(intent)
             }
         }

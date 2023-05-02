@@ -1,24 +1,19 @@
 package com.wakacjeapp
 
-class User {
-    var name: String? = null
-    var email: String? = null
-    var uid: String? = null
-    var data_rezerwacji: String? =null
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
+class User (
+    var name: String?,
+    var email: String?,
+    var uid: String?
+    ) : Parcelable
 
-    constructor()
-
-    constructor(name: String?,email: String?,uid:String?){
-        this.name = name
-        this.email = email
-        this.uid = uid
-    }
-
-    constructor(name: String?,email: String?,uid:String?,data_rezerwacji:String?){
-        this.name = name
-        this.email = email
-        this.uid = uid
-        this.data_rezerwacji = data_rezerwacji
-    }
+{
+    constructor() : this(
+        "",
+        "",
+        ""
+    )
 }
