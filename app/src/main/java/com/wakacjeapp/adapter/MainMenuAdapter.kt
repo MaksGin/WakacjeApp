@@ -89,7 +89,7 @@ class MainMenuAdapter(private val dataItemList : List<DataItem>, val context: Co
             binding.FourthTextMenu.text = menu.fourth_text
 
             btn1.setOnClickListener {
-                val intent = Intent(context,LatestMessagesActivity::class.java)
+                val intent = Intent(context,NewMessageActivity::class.java)
                 context.startActivity(intent)
             }
 

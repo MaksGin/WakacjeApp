@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -12,9 +13,12 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.wakacjeapp.LoginActivity
 import com.wakacjeapp.R
 import com.wakacjeapp.RegisterActivity
+import com.wakacjeapp.USER_EMAIL
 import com.wakacjeapp.User
+import com.wakacjeapp.client_interface.MainClientMenu
 import com.wakacjeapp.databinding.ActivityNewMessageBinding
 
 class NewMessageActivity : AppCompatActivity() {
@@ -24,14 +28,24 @@ class NewMessageActivity : AppCompatActivity() {
     private lateinit var myref: DatabaseReference
     private lateinit var auth: FirebaseAuth
     private lateinit var adapter: NewMessageAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNewMessageBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        supportActionBar?.title = "Select User"
+        supportActionBar?.title = "Wybierz użytkownika"
         userList = ArrayList()
         adapter = NewMessageAdapter(this,userList)
+
+        if (supportActionBar != null) {
+            supportActionBar!!.hide()
+        }
+
+        binding?.bckBtn?.setOnClickListener{
+            val intent = Intent(this, MainClientMenu::class.java)
+            startActivity(intent)
+        }
 
         myref = FirebaseDatabase.getInstance().getReference()
         auth = FirebaseAuth.getInstance()

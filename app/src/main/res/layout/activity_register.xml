@@ -29,14 +29,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hello."
+            android:text="Witaj."
             android:textStyle="bold"
             android:textSize="32dp"
             android:textColor="@color/white"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Let's get started."
+            android:text="Zaczynajmy!"
             android:textStyle="bold"
             android:textSize="32dp"
             android:textColor="@color/white"/>
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15sp"
             android:background="@drawable/rounded_corner"
-            android:hint="Name"
+            android:hint="Imie"
             android:textColorHint="@color/white"
             android:minHeight="48dp"
             android:padding="10sp"
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15sp"
             android:background="@drawable/rounded_corner"
-            android:hint="Password"
+            android:hint="Hasło"
             android:inputType="textPassword"
             android:minHeight="48dp"
             android:padding="10sp"
@@ -95,7 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15sp"
             android:background="@drawable/rounded_corner"
-            android:hint="Confirm Password"
+            android:hint="Potwierdź Hasło"
             android:inputType="textPassword"
             android:minHeight="48dp"
             android:padding="10sp"
@@ -129,7 +129,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Already have account?"
+                android:text="Już masz u nas konto?"
                 android:textAlignment="center"
                 android:textSize="15sp"
                 android:textColor="@color/white"/>
@@ -138,7 +138,7 @@
                 android:id="@+id/login_text_view_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Login"
+                android:text="   Zaloguj się"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:textColor="@color/white"/>
