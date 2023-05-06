@@ -76,7 +76,7 @@ class RegisterActivity : AppCompatActivity() {
                 email = binding?.emailEditText?.text.toString().trim()
                 saveToFirebase(User(name, email, uid = firebaseAuth.uid))
                 Toast.makeText(this, "Sukces", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this,LatestMessagesActivity::class.java)
+                val intent = Intent(this,LoginActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
 
