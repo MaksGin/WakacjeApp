@@ -1,23 +1,28 @@
 package com.wakacjeapp.Messages
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.wakacjeapp.databinding.ActivityChatGroupBinding
 import com.wakacjeapp.databinding.ActivityChatLogBinding
+
 
 class ChatLogActivity : AppCompatActivity() {
 
-    private var binding: ActivityChatLogBinding? = null
+    var binding: ActivityChatLogBinding? = null
     private lateinit var messageAdapter: ChatMessageAdapter
     private lateinit var messageList: ArrayList<Message>
     private lateinit var messageBox: EditText
     private lateinit var myref: DatabaseReference
+
+
+
 
     var receiverRoom: String? = null
     var senderRoom: String? = null
@@ -26,6 +31,8 @@ class ChatLogActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityChatLogBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+
+
 
 
         val name = intent.getStringExtra("name")
@@ -47,7 +54,13 @@ class ChatLogActivity : AppCompatActivity() {
 
         binding?.rvChatLog?.layoutManager = LinearLayoutManager(this@ChatLogActivity)
         binding?.rvChatLog?.adapter = messageAdapter
+
+
+
         messageBox = binding?.enterMsg!!
+
+        // Pobierz wiadomości z bazy danych
+        fetchMessagesFromDatabase()
 
         binding?.btnSend?.setOnClickListener {
 
@@ -91,7 +104,13 @@ class ChatLogActivity : AppCompatActivity() {
 
                             messageList.add(message!!)
                         }
+
                         messageAdapter.notifyDataSetChanged()
+                        val lastVisibleItemPosition = (binding?.rvChatLog?.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+                        if (lastVisibleItemPosition != RecyclerView.NO_POSITION) {
+                            binding?.rvChatLog?.smoothScrollToPosition(lastVisibleItemPosition)
+                        }
+
                     }
 
                     override fun onCancelled(error: DatabaseError) {
@@ -102,7 +121,43 @@ class ChatLogActivity : AppCompatActivity() {
 
 
         }
+
+
+
+
+
     }
+
+    private fun fetchMessagesFromDatabase() {
+        myref.child("chats").child(senderRoom!!).child("messages")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    messageList.clear()
+
+                    for (postSnapshot in snapshot.children) {
+                        val message = postSnapshot.getValue(Message::class.java)
+                        messageList.add(message!!)
+                    }
+
+                    messageAdapter.notifyDataSetChanged()
+                    val lastindex = binding?.rvChatLog?.adapter?.itemCount?.minus(1) ?: 0
+                    binding?.rvChatLog?.scrollToPosition(lastindex)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    // obsługa błędów
+                }
+            })
+
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
+    }
+
 }
+
 
 

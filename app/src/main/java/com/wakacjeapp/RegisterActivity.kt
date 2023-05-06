@@ -23,6 +23,10 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
+        if (supportActionBar != null) {
+            supportActionBar!!.hide()
+        }
+
         binding?.loginTextViewBtn?.setOnClickListener {
             val intent = Intent(this,LoginActivity::class.java)
             startActivity(intent)

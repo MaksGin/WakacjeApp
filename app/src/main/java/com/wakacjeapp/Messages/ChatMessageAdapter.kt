@@ -52,6 +52,7 @@ class ChatMessageAdapter(val context: Context,val messageList: ArrayList<Message
         }
 
 
+
     }
 
 

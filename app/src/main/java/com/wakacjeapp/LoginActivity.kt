@@ -20,6 +20,10 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
+        if (supportActionBar != null) {
+            supportActionBar!!.hide()
+        }
+
         auth = FirebaseAuth.getInstance()
 
         var email = binding?.emailEditText?.text.toString()
