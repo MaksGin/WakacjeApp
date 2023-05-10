@@ -21,7 +21,11 @@
         <activity
             android:name=".client_interface.InfoActivity"
             android:exported="false"
-            android:theme="@style/AppTheme.NoStatusBar" />
+            android:theme="@style/AppTheme.NoStatusBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".client_interface.MainClientMenu" />
+        </activity>
         <activity
             android:name=".client_interface.AllTrips"
             android:exported="false"
