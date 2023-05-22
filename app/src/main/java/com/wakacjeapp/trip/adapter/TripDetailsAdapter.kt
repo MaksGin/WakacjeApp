@@ -23,9 +23,9 @@ class TripDetailsAdapter(private val daysList: ArrayList<TripDay>,val context: C
                 Log.e("Error", "TripDay ${tripDay.opis}")
                 // Tutaj włącza się aktywność ale trzeba zmienić chyba strukture bazy żeby była godzina i taka lista co jaka godzina itd, to da się w mainclientmenu zmienić pola
                 // w MainClientMenu, wpierw usunąć wszystkie rekordy z bazy, odkomentować "dodaj wycieczki" tam gdzie jest listener dla ikonki konta i tam trzeba zmienić strukture bazy Trip
-//                val intent = Intent(context, TripDetailsDayActivity::class.java)
-//                intent.putExtra("trip_day", tripDay)
-//                context.startActivity(intent)
+                val intent = Intent(context, TripDetailsDayActivity::class.java)
+                intent.putExtra("trip_day", tripDay)
+                context.startActivity(intent)
             }
 
         }

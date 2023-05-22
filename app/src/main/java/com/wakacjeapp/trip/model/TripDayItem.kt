@@ -1,12 +1,16 @@
 package com.wakacjeapp.trip.model
 
-class TripDayItem {
-    var godzina: Double
-    var opis: String
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-    constructor(godzina: Double, opis: String)
-    {
-        this.godzina = godzina
-        this.opis = opis
-    }
+@Parcelize
+class TripDayItem (
+    var godzina: String,
+    var opis: String
+) : Parcelable
+{
+    constructor() :this (
+        "",
+        ""
+    )
 }

@@ -15,13 +15,13 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintBottom_toBottomOf="@+id/arrowBack2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+        app:layout_constraintStart_toEndOf="@+id/arrowBack2"
+        app:layout_constraintTop_toTopOf="@+id/arrowBack2" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/arrowBack2"
         android:layout_width="50dp"
         android:layout_height="60dp"
         android:layout_marginStart="36dp"

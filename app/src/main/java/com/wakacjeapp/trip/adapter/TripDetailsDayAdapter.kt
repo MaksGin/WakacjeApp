@@ -4,9 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.wakacjeapp.databinding.TripDetailsElementBinding
+import com.wakacjeapp.trip.TripDetailsDayActivity
 import com.wakacjeapp.trip.model.TripDayItem
 
-class TripDetailsDayAdapter(private val activitiesList: ArrayList<TripDayItem>) :
+class TripDetailsDayAdapter(
+    private val activitiesList: ArrayList<TripDayItem>,
+    tripDetailsDayActivity: TripDetailsDayActivity
+) :
     RecyclerView.Adapter<TripDetailsDayAdapter.TripDetailsDayViewHolder>() {
 
     inner class TripDetailsDayViewHolder(private val itemBinding: TripDetailsElementBinding):RecyclerView.ViewHolder(itemBinding.root) {
